@@ -13,13 +13,13 @@ class CoursesController < ApplicationController
   end
 
   def create
-    @course = Course.new
-    @course.title = params.fetch("query_title")
-    @course.term_offered = params.fetch("query_term_")
-    @course.department_id = params.fetch("query_department_id")
+    course = Course.new
+    course.title = params.fetch("query_title")
+    course.term_offered = params.fetch("query_term")
+    course.department_id = params.fetch("query_department_id")
 
-    if @course.valid?
-      @course.save
+    if course.valid?
+      course.save
       redirect_to("/courses", { :notice => "Course created successfully." })
     else
       redirect_to("/courses", { :notice => "Course failed to create successfully." })
@@ -27,8 +27,8 @@ class CoursesController < ApplicationController
   end
 
   def update
-    id = params.fetch("path_id")
-    @course = Course.where({ :id => the_id }).at(0)
+    the_id = params.fetch("path_id")
+    @course = Course.where({:id => the_id }).at(0)
 
     @course.title = params.fetch("query_title")
     @course.term_offered = params.fetch("query_term_offered")
@@ -43,10 +43,10 @@ class CoursesController < ApplicationController
   end
 
   def destroy
-    the_id = params.fetch("path")
-    @course = Course.where({ :id => the_id }).at(0)
+    the_id = params.fetch("path_id")
+    course = Course.where({ :id => the_id }).at(0)
 
-    @course.destroy
+    course.destroy
 
     redirect_to("/courses", { :notice => "Course deleted successfully."} )
   end

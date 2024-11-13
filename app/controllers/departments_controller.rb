@@ -27,12 +27,12 @@ class DepartmentsController < ApplicationController
 
   def update
     the_id = params.fetch("path_id")
-    department = Department.where({ :id => the_id }).at(0)
+    @department = Department.where({ :id => the_id }).at(0)
 
-    department.name = params.fetch("query_name")
+    @department.name = params.fetch("query_name")
 
-    if department.valid?
-      department.save
+    if @department.valid?
+      @department.save
       redirect_to("/departments/#{@department.id}", { :notice => "Department updated successfully."} )
     else
       redirect_to("/departments/#{@department.id}", { :alert => "Department failed to update successfully." })
