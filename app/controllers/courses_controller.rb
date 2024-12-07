@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   def index
-    @course = Course.all.order({ :created_at => :desc })
+    @courses = Course.all.order({ :created_at => :desc })
 
     render({ :template => "courses/index" })
   end
@@ -41,6 +41,14 @@ class CoursesController < ApplicationController
       redirect_to("/courses/#{@course.id}", { :alert => "Course failed to update successfully." })
     end
   end
+
+  def edit
+    the_id = params.fetch("path_id") # Fetch the course ID from the path
+    @course = Course.where({ :id => the_id }).at(0) # Find the specific course
+  
+    render({ :template => "courses/edit" }) # Render the edit template
+  end
+
 
   def destroy
     the_id = params.fetch("path_id")
